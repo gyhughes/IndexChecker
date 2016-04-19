@@ -1,0 +1,1 @@
+This folder contains the weekly status reports for each member and the whole team
