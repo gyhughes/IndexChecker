@@ -1,8 +1,6 @@
 package test;
 
-import qual.IndexFor;
-import qual.IndexHigh;
-import qual.IndexTop;
+import index.qual.*;
 
 public class testProgram {
 	public static void main(String[] args){

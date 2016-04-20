@@ -1,4 +1,4 @@
-package qual;
+package index.qual;
 
 import java.lang.annotation.*;
 
