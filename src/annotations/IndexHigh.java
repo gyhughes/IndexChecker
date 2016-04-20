@@ -9,5 +9,5 @@ import org.checkerframework.framework.qual.SubtypeOf;
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
 
 public @interface IndexHigh {
-
+	String value();
 }
