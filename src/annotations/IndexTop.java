@@ -1,9 +1,10 @@
+package annotations;
 
 import java.lang.annotation.*;
 
-import org.checkerframework.framework.*;
+import org.checkerframework.framework.qual.SubtypeOf;
 
-@SubtypeOf(Unqualified.class)
+@SubtypeOf({})
 @Target({ElementType.FIELD, ElementType.PARAMETER})
 public @interface IndexTop {
 
