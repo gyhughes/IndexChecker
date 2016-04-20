@@ -1,8 +1,8 @@
 package test;
 
-import annotations.IndexFor;
-import annotations.IndexHigh;
-import annotations.IndexTop;
+import qual.IndexFor;
+import qual.IndexHigh;
+import qual.IndexTop;
 
 public class testProgram {
 	public static void main(String[] args){

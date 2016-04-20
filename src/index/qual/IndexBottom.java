@@ -1,4 +1,4 @@
-package annotations;
+package qual;
 
 import org.checkerframework.framework.qual.SubtypeOf;
 
