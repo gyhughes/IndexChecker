@@ -1,5 +1,7 @@
 package test;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 import Trivial.*;
 import Trivial.quals.*;
 
@@ -9,8 +11,8 @@ public class testTrivial {
 		int b = 0;
 		@Unknown int k = -10;
 		@NonNegative int m = k;
-
 		
+		nulla(null);
 		NN2NN(b);
 		NN2U(b);
 		U2U(b);
@@ -32,5 +34,8 @@ public class testTrivial {
 	
 	public static void NN2NN(@NonNegative int x) {
 		@NonNegative int y = x;   // OK
+	}
+	public static void nulla(Object m){
+		m.getClass();
 	}
 }
