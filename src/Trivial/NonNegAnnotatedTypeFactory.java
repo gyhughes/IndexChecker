@@ -1,5 +1,10 @@
 package Trivial;
 
+import org.checkerframework.framework.type.treeannotator.ListTreeAnnotator;
+import org.checkerframework.framework.type.treeannotator.PropagationTreeAnnotator;
+
+import java.util.Set;
+
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 
@@ -12,6 +17,7 @@ import org.checkerframework.framework.util.AnnotationBuilder;
 import org.checkerframework.javacutil.AnnotationUtils;
 import org.checkerframework.javacutil.TreeUtils;
 
+import com.sun.source.tree.ArrayAccessTree;
 import com.sun.source.tree.BinaryTree;
 import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.MethodInvocationTree;
@@ -19,13 +25,23 @@ import com.sun.source.tree.Tree;
 
 import index.qual.IndexFor;
 import index.qual.NonNegative;
+import org.checkerframework.framework.type.treeannotator.ImplicitsTreeAnnotator;
 
 public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 
 	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker, boolean useFlow) {
 		super(checker, useFlow);
 	}
-	
+
+	@Override
+	public TreeAnnotator createTreeAnnotator() {
+		return new ListTreeAnnotator(
+				new ImplicitsTreeAnnotator(this),
+				new NonNegTreeAnnotator(this),
+				new PropagationTreeAnnotator(this)
+				);
+	}
+
 	//returns a new @NonNegative annotation
 	AnnotationMirror createNonNegAnnotation() {
 		AnnotationBuilder builder =
@@ -37,9 +53,9 @@ public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 	public void annotateImplicit(Element element, AnnotatedTypeMirror type) {
 
 	}
-	private class IndexTreeAnnotator extends TreeAnnotator {
+	private class NonNegTreeAnnotator extends TreeAnnotator {
 
-		public IndexTreeAnnotator(AnnotatedTypeFactory atypeFactory) {
+		public NonNegTreeAnnotator(AnnotatedTypeFactory atypeFactory) {
 			super(atypeFactory);
 		}
 		
@@ -55,15 +71,7 @@ public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 			}
 			return super.visitLiteral(tree, type);
 		}
-		// adding top to nonnegative make it top
-		@Override
-		public Void visitBinary(BinaryTree tree, AnnotatedTypeMirror type){
-			AnnotatedTypeMirror left = getAnnotatedType(tree.getLeftOperand());
-			AnnotatedTypeMirror right = getAnnotatedType(tree.getRightOperand());
-			
-			
-			
-			return super.visitBinary(tree, type);
-		}
+
+		
 	}
 }

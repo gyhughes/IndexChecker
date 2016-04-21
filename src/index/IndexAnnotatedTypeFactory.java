@@ -7,6 +7,9 @@ import org.checkerframework.common.basetype.BaseAnnotatedTypeFactory;
 import org.checkerframework.common.basetype.BaseTypeChecker;
 import org.checkerframework.framework.type.AnnotatedTypeFactory;
 import org.checkerframework.framework.type.AnnotatedTypeMirror;
+import org.checkerframework.framework.type.treeannotator.ImplicitsTreeAnnotator;
+import org.checkerframework.framework.type.treeannotator.ListTreeAnnotator;
+import org.checkerframework.framework.type.treeannotator.PropagationTreeAnnotator;
 import org.checkerframework.framework.type.treeannotator.TreeAnnotator;
 import org.checkerframework.framework.util.AnnotationBuilder;
 import org.checkerframework.javacutil.AnnotationUtils;
@@ -17,8 +20,7 @@ import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.MethodInvocationTree;
 import com.sun.source.tree.Tree;
 
-import index.qual.IndexFor;
-import index.qual.NonNegative;
+import index.qual.*;
 
 public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 
@@ -26,10 +28,25 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 		super(checker, useFlow);
 	}
 	
+	@Override
+	public TreeAnnotator createTreeAnnotator() {
+		return new ListTreeAnnotator(
+				new ImplicitsTreeAnnotator(this),
+				new IndexTreeAnnotator(this),
+				new PropagationTreeAnnotator(this)
+				);
+	}
+	
 	//returns a new @NonNegative annotation
 	AnnotationMirror createNonNegAnnotation() {
 		AnnotationBuilder builder =
 				new AnnotationBuilder(processingEnv, NonNegative.class);
+		return builder.build();
+	}
+	// returns new @IndexLow
+	AnnotationMirror createIndexLowAnnotation() {
+		AnnotationBuilder builder =
+				new AnnotationBuilder(processingEnv, IndexLow.class);
 		return builder.build();
 	}
 
@@ -50,6 +67,9 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 				if(tree.getKind() == Tree.Kind.INT_LITERAL) {
 					if((int)tree.getValue() > -1){
 						type.addAnnotation(createNonNegAnnotation());
+					}
+					if((int)tree.getValue() == -1){
+						type.addAnnotation(createIndexLowAnnotation());
 					}
 				}
 			}
