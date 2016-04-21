@@ -60,12 +60,12 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 		// if literal is at least zero assign it @NonNegative
 		@Override
 		public Void visitLiteral(LiteralTree tree, AnnotatedTypeMirror type){
-			if(!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements, IndexFor.class))){
-				if(tree.getKind() == Tree.Kind.INT_LITERAL) {
-					if((int)tree.getValue() > -1){
+			if (!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements, IndexFor.class))) {
+				if (tree.getKind() == Tree.Kind.INT_LITERAL) {
+					if ((int)tree.getValue() > -1) {
 						type.addAnnotation(createNonNegAnnotation());
 					}
-					if((int)tree.getValue() == -1){
+					if ((int)tree.getValue() == -1) {
 						type.addAnnotation(createIndexLowAnnotation());
 					}
 				}
