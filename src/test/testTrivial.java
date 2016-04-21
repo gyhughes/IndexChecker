@@ -1,10 +1,15 @@
 package test;
 
+import Trivial.*;
 import Trivial.quals.*;
 
+@SuppressWarnings("unused")
 public class testTrivial {
 	public static void main(String[] args){
-		int b = 1;
+		int b = 0;
+		@Unknown int k = -10;
+		@NonNegative int m = k;
+
 		
 		NN2NN(b);
 		NN2U(b);
