@@ -1,4 +1,4 @@
-package index;
+package Trivial;
 
 import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
@@ -20,9 +20,9 @@ import com.sun.source.tree.Tree;
 import index.qual.IndexFor;
 import index.qual.NonNegative;
 
-public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
+public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 
-	public IndexAnnotatedTypeFactory(BaseTypeChecker checker, boolean useFlow) {
+	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker, boolean useFlow) {
 		super(checker, useFlow);
 	}
 	
