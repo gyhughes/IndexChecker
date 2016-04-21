@@ -1,41 +1,50 @@
 package test;
 
-import org.checkerframework.checker.nullness.qual.Nullable;
-
-import Trivial.*;
 import Trivial.quals.*;
 
-@SuppressWarnings("unused")
 public class testTrivial {
 	public static void main(String[] args){
-		int b = 0;
-		@Unknown int k = -10;
-		@NonNegative int m = k;
+		@NonNegative int a = 1; // TODO: Why is '1' '@Unknown int' ?
+		@Unknown int b = 0;
 		
-		nulla(null);
-		NN2NN(b);
-		NN2U(b);
-		U2U(b);
+		// Tests for Qualifier Hierarchy.
+		NN2NN(a);
+		NN2U(a);
+		U2U(a);
 		U2NN(b); // ERROR
+		
+		// Tests for .
+		nulla(null);
+		
 		
 		System.out.println("testNonNegative: Success");
 	}
-	
-	public static void U2NN(@Unknown int x) {
-		@NonNegative int y = x;   // ERROR!
-	}
-	
-	public static void NN2U(@NonNegative int x) {
-		@Unknown int y = x;   // OK
-	}
-	public static void U2U(@Unknown int x) {
-		@Unknown int y = x;   // OK
-	}
-	
+
+	// @NonNegative variable assigned a @NonNegative value. Legal.
 	public static void NN2NN(@NonNegative int x) {
-		@NonNegative int y = x;   // OK
+		@SuppressWarnings("unused")
+		@NonNegative int y = x;
 	}
-	public static void nulla(Object m){
-		m.getClass();
+	
+	// @Unknown variable assigned a @NonNegative value. Legal.
+	public static void NN2U(@NonNegative int x) {
+		@SuppressWarnings("unused")
+		@Unknown int y = x;
+	}
+	
+	// @Unknown variable assigned an @Unknown value. Legal.
+	public static void U2U(@Unknown int x) {
+		@SuppressWarnings("unused")
+		@Unknown int y = x;
+	}
+	
+	// @NonNegative variable assigned an @Unknown value. Illegal.
+	public static void U2NN(@Unknown int x) {
+		@SuppressWarnings("unused")
+		@NonNegative int y = x;
+	}
+	
+	public static void nulla(Object m){ 
+		m.getClass(); 
 	}
 }
