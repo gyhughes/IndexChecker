@@ -6,7 +6,7 @@ import org.checkerframework.framework.qual.SubtypeOf;
 import org.checkerframework.framework.qual.DefaultQualifierInHierarchy;
 
 @SubtypeOf( { } )
-@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
+@Target({ElementType.TYPE_USE, ElementType.PARAMETER})
 @DefaultQualifierInHierarchy
 public @interface Unknown {
 

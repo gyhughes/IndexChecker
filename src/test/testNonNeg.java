@@ -8,7 +8,8 @@ public class testNonNeg {
 	}
 	@SuppressWarnings("unused")
 	void foo(@Unknown int a, @NonNegative int b){
-		@NonNegative int d = a;
+		int[] arr = new int[20];
+		b = arr[a];
 	}
 
 }
