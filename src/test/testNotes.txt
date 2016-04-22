@@ -37,4 +37,33 @@ Through Eclipse:
 				error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.ClassCastException: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory; invoke the compiler with -AprintErrorStack to see the stack trace.
 				1 error
 			
+			
+		Change @Target of classes to @Target({ElementType.TYPE_USE, ElementType.TYPE_PARAMETER}) from @Target({ElementType.TYPE_USE, ElementType.PARAMETER})
+		
+			compile quals: javacheck Trivial/qual/*.java
+			compile checker: javacheck Trivial/NonNegChecker.class
+			run:javacheck -processor Trivial.NonNegChecker ./test/testTrivial.java
+				./test/testTrivial.java:8: error: [assignment.type.incompatible] incompatible types in assignment.
+				@NonNegative int a = 1; // TODO: Why is '1' '@Unknown int' ?
+		                     ^
+				  found   : @Unknown int
+				  required: @NonNegative int
+				./test/testTrivial.java:45: error: [assignment.type.incompatible] incompatible types in assignment.
+						@NonNegative int y = x;
+						                     ^
+				  found   : @Unknown int
+				  required: @NonNegative int
+				2 errors
+			
+			
+		Works???
+		
+Plug-in
+	after fixing @Target, remove factory and visitor
+	NonNegChecker:	works
+	
+	Put Factory Back:
+		error: SourceChecker.typeProcessingStart: unexpected Throwable (ClassCastException); message: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory; invoke the compiler with -AprintErrorStack to see the stack trace.
+		1 error
+	
 	
