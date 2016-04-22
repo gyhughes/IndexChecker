@@ -1,7 +1,6 @@
 package test;
 import Trivial.qual.NonNegative;
 import Trivial.qual.Unknown;
-import Trivial.quals.*;
 public class testNonNeg {
 
 	public testNonNeg() {
