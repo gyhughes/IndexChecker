@@ -6,7 +6,7 @@ import Trivial.qual.Unknown;
 public class testTrivial {
 	public static void main(String[] args){
 		@NonNegative int a = 1; // TODO: Why is '1' '@Unknown int' ?
-		@Unknown int b = 0;
+		@Unknown int b = -50;
 		
 		// Tests for Qualifier Hierarchy.
 		NN2NN(a);
@@ -14,7 +14,7 @@ public class testTrivial {
 		U2U(a);
 		U2NN(b); // ERROR
 		
-		// Tests for .
+		// Tests for Nullness checker, make sure checker framework plugin works(
 		nulla(null);
 		
 		
