@@ -13,7 +13,7 @@ import index.qual.NonNegative;
 
 public class NonNegAnnotatedTypeFactory extends AnnotatedTypeFactory{
 
-	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker, boolean useFlow) {
+	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker) {
 		super(checker);
 	}
 
