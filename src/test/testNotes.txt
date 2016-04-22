@@ -1,0 +1,40 @@
+Through Eclipse:
+	subtyping checker with Aquals:  Works
+	NonNegChecker: no
+	add annotatedtypefactory: no
+	subtypeing: works
+	override Qualifiers method in the factory: no 
+		@Override 
+		protected Set<Class<? extends Annotation>> createSupportedTypeQualifiers() {
+		      return Collections.unmodifiableSet(new HashSet<Class<? extends Annotation>>(Arrays.asList(Unknown.class,NonNegative.class)));
+		  }
+	add intro rule in factory: no
+	subtypeing with aquals: works
+	add BaseTypeVisitor: no
+	remove factory keep visitor: no
+	factory back, add array rule in visitor(didnt expect much): no
+	subtyping checker: works
+	rewrite the annotation files from scratch(why not): no
+	subtyping checker: works
+	throw out factory and visitor: no
+	bring back files, remove override: no
+	
+	Command Line:
+		nullness checker: javacheck -processor org.checkerframework.checker.nullness.NullnessChecker ./test/testTrivial.java
+		works
+		
+		subtyping checker:javacheck -processor org.checkerframework.common.subtyping.SubtypingChecker -Aquals=Trivial.qual.NonNegative,Trivial.qual.Unknown ./test/testTrivial.java
+		works
+		
+		NonNeg checker:
+			compile: javacheck Trivial/NonNegChecker.java
+			run:javacheck -processor Trivial.NonNegChecker ./test/testTrivial.java
+				error: GenericAnnotatedTypeFactory.createQualifierDefaults: @DefaultQualifierInHierarchy or @DefaultFor(TypeUseLocation.OTHERWISE) not found. Every checker must specify a default qualifier. 1 qualifiers examined: org.checkerframework.framework.qual.PolyAll; invoke the compiler with -AprintErrorStack to see the stack trace.
+				1 error
+			
+			compile: javacheck Trivial/NonNegChecker.java Trivial/NonNegAnnotatedTypeFactory.java Trivial/NonNegVisitor.java
+			run:javacheck -processor Trivial.NonNegChecker ./test/testTrivial.java
+				error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.ClassCastException: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory; invoke the compiler with -AprintErrorStack to see the stack trace.
+				1 error
+			
+	

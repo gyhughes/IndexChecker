@@ -31,7 +31,8 @@ public class NonNegAnnotatedTypeFactory extends AnnotatedTypeFactory{
 		return builder.build();
 	}
 	
-	@Override protected Set<Class<? extends Annotation>> createSupportedTypeQualifiers() {
+	@Override 
+	protected Set<Class<? extends Annotation>> createSupportedTypeQualifiers() {
 	      return Collections.unmodifiableSet(new HashSet<Class<? extends Annotation>>(Arrays.asList(Unknown.class,NonNegative.class)));
 	  }
 	
