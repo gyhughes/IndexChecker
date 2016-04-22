@@ -4,6 +4,9 @@ import org.checkerframework.common.basetype.BaseTypeChecker;
 import org.checkerframework.framework.type.AnnotatedTypeFactory;
 import org.checkerframework.framework.type.AnnotatedTypeMirror;
 import org.checkerframework.framework.util.AnnotationBuilder;
+import org.checkerframework.javacutil.AnnotationUtils;
+
+import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.Tree;
 
 import index.qual.NonNegative;
@@ -23,7 +26,13 @@ public class NonNegAnnotatedTypeFactory extends AnnotatedTypeFactory{
 	
 	@Override
 	public void annotateImplicit(Tree tree, AnnotatedTypeMirror type) {
-		
+		if(!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements,NonNegative.class))){
+			if(tree.getKind().equals(Tree.Kind.INT_LITERAL)){
+				if(((int)((LiteralTree) tree).getValue()) > -1){
+					type.addAnnotation(createNonNegAnnotation());
+				}
+			}
+		}
 	}
 		
 }
