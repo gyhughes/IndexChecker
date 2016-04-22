@@ -6,7 +6,7 @@ public class testNonNeg {
 	public testNonNeg() {
 		foo(4,10);
 	}
-	@SuppressWarnings("unused")
+
 	void foo(@Unknown int a, @NonNegative int b){
 		int[] arr = new int[20];
 		b = arr[a];
