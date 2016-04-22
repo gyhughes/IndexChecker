@@ -10,7 +10,7 @@ import com.sun.source.tree.ArrayAccessTree;
 import Trivial.quals.Unknown;
 
 
-public class NonNegVisitor extends BaseTypeVisitor<NonNegAnnotatedTypeFactory> {
+public class NonNegVisitor extends BaseTypeVisitor<NonNegAnnotatedTypeFactory>{
 
 	public NonNegVisitor(BaseTypeChecker checker) {
 		super(checker);
@@ -19,7 +19,7 @@ public class NonNegVisitor extends BaseTypeVisitor<NonNegAnnotatedTypeFactory> {
 	@Override
 	public Void visitArrayAccess(ArrayAccessTree tree, Void type){
 		AnnotatedTypeMirror indexType = atypeFactory.getAnnotatedType(tree.getIndex());
-		if (indexType.hasAnnotation(Unknown.class)) {
+		if (indexType.hasAnnotation(Trivial.qual.Unknown.class)) {
 			checker.report(Result.failure("array.access.unsafe", indexType), indexType);
 		}
 		return super.visitArrayAccess(tree, type);

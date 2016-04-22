@@ -1,4 +1,4 @@
-package Trivial.quals;
+package Trivial.qual;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

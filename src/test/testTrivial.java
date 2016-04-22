@@ -1,6 +1,7 @@
 package test;
 
-import Trivial.quals.*;
+import Trivial.qual.NonNegative;
+import Trivial.qual.Unknown;
 
 public class testTrivial {
 	public static void main(String[] args){
