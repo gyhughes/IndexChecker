@@ -4,7 +4,7 @@ import Trivial.qual.Unknown;
 public class testNonNeg {
 
 	public testNonNeg() {
-		foo(4, 10);
+		foo(-50, 10);
 	}
 
 	void foo(@Unknown int a, @NonNegative int b){
