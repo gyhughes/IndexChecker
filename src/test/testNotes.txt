@@ -1,15 +1,36 @@
-Start with just the NonNegChecker: works
+Put NonNegAnnotatedTypeFactory Back(now in Trivial.dev):
+	error: SourceChecker.typeProcessingStart: unexpected Throwable (ClassCastException); message: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory; invoke the compiler with -AprintErrorStack to see the stack trace.
+	1 error
+	
 
-Add in the NonNegAnnotatedTypeFactory(now moved to Trivial/dev):
-error: InvocationTargetException when invoking constructor for class Trivial.NonNegAnnotatedTypeFactory; Underlying cause: java.lang.StringIndexOutOfBoundsException: String index out of range: -2
+
+Added Visitor back in(now in Trivial.dev):
+
+error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.ClassCastException: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory
+
+
+
+Build new version of typeFactory that extends GenericAnnotatedTypeFactory(now in Trivial.dec.Generic...):
+
+	error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.NullPointerException
+		
+		
+	*******************
+
+java -jar /usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar -proc:only @/tmp/CFPlugin-eclipse9172811089478484885.classpath -processor Trivial.NonNegChecker -AprintErrorStack -Adetailedmsgtext @/tmp/CFPlugin-eclipse4906149170247207136.src_files
+
+Classpath:    
+	/usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar:/homes/iws/jsantino/git/IndexChecker/bin:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunec.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/checker.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/javac.jar
+
+Source Files: 
+	/homes/iws/jsantino/git/IndexChecker/src/test/testTrivial.java
+error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.NullPointerException
   Exception: java.lang.reflect.InvocationTargetException; Stack trace: sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-  sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-  java.lang.reflect.Constructor.newInstance(Unknown Source)
+  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
   org.checkerframework.common.basetype.BaseTypeChecker.invokeConstructorFor(BaseTypeChecker.java:268)
-  org.checkerframework.common.basetype.BaseTypeVisitor.createTypeFactory(BaseTypeVisitor.java:243)
-  org.checkerframework.common.basetype.BaseTypeVisitor.<init>(BaseTypeVisitor.java:199)
-  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:212)
+  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:203)
   org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:97)
   org.checkerframework.framework.source.SourceChecker.initChecker(SourceChecker.java:818)
   org.checkerframework.common.basetype.BaseTypeChecker.initChecker(BaseTypeChecker.java:112)
@@ -27,20 +48,22 @@ error: InvocationTargetException when invoking constructor for class Trivial.Non
   com.sun.tools.javac.main.Main.compile(Main.java:361)
   com.sun.tools.javac.Main.compile(Main.java:56)
   com.sun.tools.javac.Main.main(Main.java:42)
-  Underlying Exception: java.lang.StringIndexOutOfBoundsException: String index out of range: -2; Stack trace: java.lang.String.substring(Unknown Source)
-  org.checkerframework.framework.type.AnnotationClassLoader.getAnnotationNamesFromDirectory(AnnotationClassLoader.java:646)
-  org.checkerframework.framework.type.AnnotationClassLoader.loadBundledAnnotationClasses(AnnotationClassLoader.java:528)
-  org.checkerframework.framework.type.AnnotationClassLoader.<init>(AnnotationClassLoader.java:147)
-  org.checkerframework.framework.type.AnnotatedTypeFactory.<init>(AnnotatedTypeFactory.java:329)
-  Trivial.NonNegAnnotatedTypeFactory.<init>(NonNegAnnotatedTypeFactory.java:24)
+  Underlying Exception: java.lang.NullPointerException; Stack trace: org.checkerframework.framework.type.AnnotatedTypeFactory.isSupportedQualifier(AnnotatedTypeFactory.java:2070)
+  org.checkerframework.framework.type.AnnotatedTypeMirror.addAnnotation(AnnotatedTypeMirror.java:562)
+  org.checkerframework.framework.type.AnnotatedTypeMirror.addAnnotations(AnnotatedTypeMirror.java:600)
+  org.checkerframework.framework.util.element.TypeDeclarationApplier.extractAndApply(TypeDeclarationApplier.java:113)
+  org.checkerframework.framework.util.element.TypeDeclarationApplier.apply(TypeDeclarationApplier.java:37)
+  org.checkerframework.framework.type.ElementAnnotationApplier.apply(ElementAnnotationApplier.java:89)
+  org.checkerframework.framework.type.AnnotatedTypeFactory.fromElement(AnnotatedTypeFactory.java:991)
+  org.checkerframework.framework.type.AnnotatedTypeFactory.fromElement(AnnotatedTypeFactory.java:2044)
+  org.checkerframework.common.basetype.BaseTypeVisitor.<init>(BaseTypeVisitor.java:204)
+  Trivial.NonNegVisitor.<init>(NonNegVisitor.java:17)
   sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-  sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-  java.lang.reflect.Constructor.newInstance(Unknown Source)
+  sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+  sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+  java.lang.reflect.Constructor.newInstance(Constructor.java:423)
   org.checkerframework.common.basetype.BaseTypeChecker.invokeConstructorFor(BaseTypeChecker.java:268)
-  org.checkerframework.common.basetype.BaseTypeVisitor.createTypeFactory(BaseTypeVisitor.java:243)
-  org.checkerframework.common.basetype.BaseTypeVisitor.<init>(BaseTypeVisitor.java:199)
-  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:212)
+  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:203)
   org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:97)
   org.checkerframework.framework.source.SourceChecker.initChecker(SourceChecker.java:818)
   org.checkerframework.common.basetype.BaseTypeChecker.initChecker(BaseTypeChecker.java:112)
@@ -60,3 +83,5 @@ error: InvocationTargetException when invoking constructor for class Trivial.Non
   com.sun.tools.javac.Main.main(Main.java:42)
 1 error
 
+*******************
+	
