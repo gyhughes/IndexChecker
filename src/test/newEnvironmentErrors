@@ -1,0 +1,43 @@
+Switched to Windows 10 environment(home pc, still ecilpse). Run NonNegChecker with no factories(Worked on lab machine).
+
+*******************
+
+java -jar C:\Users\jsant\.p2\pool\plugins\checker.framework.eclipse.plugin_1.9.13\lib\checker.jar -proc:only @C:\Users\jsant\AppData\Local\Temp\CFPlugin-eclipse3904416339906033802.classpath -processor Trivial.NonNegChecker -AprintErrorStack -Awarns -Adetailedmsgtext @C:\Users\jsant\AppData\Local\Temp\CFPlugin-eclipse5942841347364320502.src_files
+
+Classpath:    
+	C:\Users\jsant\.p2\pool\plugins\checker.framework.eclipse.plugin_1.9.13\lib\checker.jar;C:\Users\jsant\git\IndexChecker\bin;C:\Program Files\Java\jdk1.8.0_66\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\access-bridge-64.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\cldrdata.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\dnsns.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\jaccess.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\jfxrt.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\localedata.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\nashorn.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunec.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunjce_provider.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunmscapi.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\sunpkcs11.jar;C:\Program Files\Java\jdk1.8.0_66\jre\lib\ext\zipfs.jar;C:\Users\jsant\git\IndexChecker\FrameworkJars\checker.jar;C:\Users\jsant\git\IndexChecker\FrameworkJars\javac.jar
+
+Source Files: 
+	C:\Users\jsant\git\IndexChecker\src\test\testTrivial.java
+error: SourceChecker.typeProcessingStart: unexpected Throwable (StringIndexOutOfBoundsException); message: String index out of range: -2
+  Exception: java.lang.StringIndexOutOfBoundsException: String index out of range: -2; Stack trace: java.lang.String.substring(Unknown Source)
+  org.checkerframework.framework.type.AnnotationClassLoader.getAnnotationNamesFromDirectory(AnnotationClassLoader.java:646)
+  org.checkerframework.framework.type.AnnotationClassLoader.loadBundledAnnotationClasses(AnnotationClassLoader.java:528)
+  org.checkerframework.framework.type.AnnotationClassLoader.<init>(AnnotationClassLoader.java:147)
+  org.checkerframework.framework.type.AnnotatedTypeFactory.<init>(AnnotatedTypeFactory.java:329)
+  org.checkerframework.framework.type.GenericAnnotatedTypeFactory.<init>(GenericAnnotatedTypeFactory.java:146)
+  org.checkerframework.common.basetype.BaseAnnotatedTypeFactory.<init>(BaseAnnotatedTypeFactory.java:24)
+  org.checkerframework.common.basetype.BaseAnnotatedTypeFactory.<init>(BaseAnnotatedTypeFactory.java:33)
+  org.checkerframework.common.basetype.BaseTypeVisitor.createTypeFactory(BaseTypeVisitor.java:251)
+  org.checkerframework.common.basetype.BaseTypeVisitor.<init>(BaseTypeVisitor.java:199)
+  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:212)
+  org.checkerframework.common.basetype.BaseTypeChecker.createSourceVisitor(BaseTypeChecker.java:97)
+  org.checkerframework.framework.source.SourceChecker.initChecker(SourceChecker.java:818)
+  org.checkerframework.common.basetype.BaseTypeChecker.initChecker(BaseTypeChecker.java:112)
+  org.checkerframework.framework.source.SourceChecker.typeProcessingStart(SourceChecker.java:779)
+  org.checkerframework.javacutil.AbstractTypeProcessor$AttributionTaskListener.finished(AbstractTypeProcessor.java:183)
+  com.sun.tools.javac.api.ClientCodeWrapper$WrappedTaskListener.finished(ClientCodeWrapper.java:681)
+  com.sun.tools.javac.api.MultiTaskListener.finished(MultiTaskListener.java:111)
+  com.sun.tools.javac.main.JavaCompiler.flow(JavaCompiler.java:1342)
+  com.sun.tools.javac.main.JavaCompiler.flow(JavaCompiler.java:1296)
+  com.sun.tools.javac.main.JavaCompiler.compile2(JavaCompiler.java:901)
+  com.sun.tools.javac.main.JavaCompiler.compile(JavaCompiler.java:860)
+  com.sun.tools.javac.main.Main.compile(Main.java:523)
+  com.sun.tools.javac.main.Main.compile(Main.java:381)
+  com.sun.tools.javac.main.Main.compile(Main.java:370)
+  com.sun.tools.javac.main.Main.compile(Main.java:361)
+  com.sun.tools.javac.Main.compile(Main.java:56)
+  com.sun.tools.javac.Main.main(Main.java:42)
+1 error
+
+*******************
