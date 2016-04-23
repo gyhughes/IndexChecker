@@ -1,6 +1,0 @@
-Joe Santino – jsantino
-Individual Report 1
-
-This last week I worked on understanding the checker framework, and discovering what kinds of things are possible using annotations. I helped on designing how we want to user side class hierarchy to behave using the annotations, and what we want the annotations to be called. Additionally I created some example uses of the out of bounds checker to be included in the project plan. Also work on the plan including writing the How it Works section (a detailed description on how the annotations would be included and behave within a java program), helping draft the schedule, and talking about the risk of creating an overly restrictive framework that wouldn’t be easy enough to be used widely.
-
-Next week the work I hope to accomplish is creating a first version of the user manual for the type annotations we are designing so that we have a detailed description of exactly what we need our system to do. Help design the trivial type checker that we will create to solidify our understanding of using the checker framework. Look through other programs and find the situations where arrays are used and out of bounds to find out additional functionality we may want to support.

@@ -1,1 +1,0 @@
-This folder contains the manual and an example of how types are assigned at compilation
