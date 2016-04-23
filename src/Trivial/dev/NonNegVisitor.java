@@ -1,17 +1,11 @@
-package Trivial;
+package Trivial.dev;
 
 import org.checkerframework.common.basetype.BaseTypeChecker;
 import org.checkerframework.common.basetype.BaseTypeVisitor;
-import org.checkerframework.framework.source.Result;
-import org.checkerframework.framework.type.AnnotatedTypeFactory;
-import org.checkerframework.framework.type.AnnotatedTypeMirror;
-import org.checkerframework.framework.type.GenericAnnotatedTypeFactory;
-
-import com.sun.source.tree.ArrayAccessTree;
 
 
 
-public class NonNegVisitor extends BaseTypeVisitor{
+public class NonNegVisitor extends BaseTypeVisitor<NonNegAnnotatedTypeFactory>{
 
 	public NonNegVisitor(BaseTypeChecker checker) {
 		super(checker);
