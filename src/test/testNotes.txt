@@ -1,26 +1,25 @@
-Put NonNegAnnotatedTypeFactory Back(now in Trivial.dev):
-	error: SourceChecker.typeProcessingStart: unexpected Throwable (ClassCastException); message: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory; invoke the compiler with -AprintErrorStack to see the stack trace.
-	1 error
-	
+Run with just NonNegChecker: Works
+Run with Checker and Visitor: Works
+Add Empty File with name NonNegAnnotatedTypeFactory: works
 
+HERE |
+	 V
 
-Added Visitor back in(now in Trivial.dev):
+Start working on factory:
+	add 
+		public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 
-error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.ClassCastException: Trivial.NonNegAnnotatedTypeFactory cannot be cast to org.checkerframework.framework.type.GenericAnnotatedTypeFactory
-
-
-
-Build new version of typeFactory that extends GenericAnnotatedTypeFactory(now in Trivial.dec.Generic...):
-
-	error: InvocationTargetException when invoking constructor for class Trivial.NonNegVisitor; Underlying cause: java.lang.NullPointerException
+			public NonNegAnnotatedTypeFactory(BaseTypeChecker checker) {
+				super(checker);
+			}
 		
+		}
 		
-	*******************
-
-java -jar /usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar -proc:only @/tmp/CFPlugin-eclipse9172811089478484885.classpath -processor Trivial.NonNegChecker -AprintErrorStack -Adetailedmsgtext @/tmp/CFPlugin-eclipse4906149170247207136.src_files
+Error:
+	java -jar /usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar -proc:only @/tmp/CFPlugin-eclipse1552117569941871030.classpath -processor Trivial.NonNegChecker -AprintErrorStack -Adetailedmsgtext @/tmp/CFPlugin-eclipse4116228498982852532.src_files
 
 Classpath:    
-	/usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar:/homes/iws/jsantino/git/IndexChecker/bin:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunec.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/checker.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/javac.jar
+	/usr/lib64/eclipse/../../../homes/iws/jsantino/.eclipse/org.eclipse.platform_793567567_linux_gtk_x86_64/plugins/checker.framework.eclipse.plugin_1.9.13/lib/checker.jar:/homes/iws/jsantino/git/IndexChecker/bin:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/dnsns.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/cldrdata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunjce_provider.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/nashorn.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/localedata.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/jaccess.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/zipfs.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunpkcs11.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.77-1.b03.fc22.x86_64/jre/lib/ext/sunec.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/checker.jar:/homes/iws/jsantino/git/IndexChecker/FrameworkJars/javac.jar
 
 Source Files: 
 	/homes/iws/jsantino/git/IndexChecker/src/test/testTrivial.java
@@ -84,4 +83,5 @@ error: InvocationTargetException when invoking constructor for class Trivial.Non
 1 error
 
 *******************
+
 	
