@@ -21,7 +21,7 @@ public class NonNegVisitor extends BaseTypeVisitor<BaseAnnotatedTypeFactory> {
 		ExpressionTree index = tree.getIndex();
 		AnnotatedTypeMirror indexType = atypeFactory.getAnnotatedType(index);
 		if (!indexType.hasAnnotation(Trivial.qual.NonNegative.class)) {
-			checker.report(Result.warning("unsafe array access: only use NonNegative index"), index);
+			checker.report(Result.warning("Potentially unsafe array access: only use NonNegative index"), index);
 		}
 		return super.visitArrayAccess(tree, type);
 	}
