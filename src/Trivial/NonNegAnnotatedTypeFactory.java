@@ -58,7 +58,7 @@ public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 
 		// if literal is at least zero assign it @NonNegative
 		@Override
-		public Void visitLiteral(LiteralTree tree, AnnotatedTypeMirror type){
+		public Void visitLiteral(LiteralTree tree, AnnotatedTypeMirror type) {
 			if (!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements, IndexFor.class))) {
 				if (tree.getKind() == Tree.Kind.INT_LITERAL) {
 					if ((int)tree.getValue() > -1) {

@@ -43,9 +43,9 @@ public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory{
 	
 //	@Override
 //	public void annotateImplicit(Tree tree, AnnotatedTypeMirror type) {
-//		if(!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements,NonNegative.class))){
-//			if(tree.getKind().equals(Tree.Kind.INT_LITERAL)){
-//				if(((int)((LiteralTree) tree).getValue()) > -1){
+//		if(!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements,NonNegative.class))) {
+//			if(tree.getKind().equals(Tree.Kind.INT_LITERAL)) {
+//				if(((int)((LiteralTree) tree).getValue()) > -1) {
 //					type.addAnnotation(createNonNegAnnotation());
 //				}
 //			}
