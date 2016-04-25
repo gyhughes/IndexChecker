@@ -5,7 +5,7 @@ import Trivial.qual.Unknown;
 
 public class testTrivial {
 	public static void main(String[] args){
-		@NonNegative int a = 1; // TODO: Why is '1' '@Unknown int' ?
+		@NonNegative int a = 1; 
 		@Unknown int b = -50;
 		
 		// Tests for Qualifier Hierarchy.
