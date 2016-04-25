@@ -9,7 +9,8 @@ public class testNonNeg {
 
 	void foo(@Unknown int a, @NonNegative int b){
 		@NonNegative int[] arr = new int[20];
-		b = arr[a];
+		int c = arr[a];  //  this line should warn for Unknown access
+		b = arr[b];
 	}
 
 }
