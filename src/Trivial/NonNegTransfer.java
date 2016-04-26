@@ -58,17 +58,14 @@ public class NonNegTransfer extends CFAbstractTransfer<CFValue, CFStore, NonNegT
 			Receiver r = new LocalVariable(n);
 			elseStore.insertValue(r , atypeFactory.createUnknownAnnotation());
 			if(operand.hasAnnotation(NonNegative.class)){
-			AnnotationMirror anno = atypeFactory.createNonNegAnnotation();
-			thenStore.insertValue(r, anno);
-			return newResult;
+				AnnotationMirror anno = atypeFactory.createNonNegAnnotation();
+				thenStore.insertValue(r, anno);
+				return newResult;
 			}
 		}
 		catch(ClassCastException e){
 		}
-		AnnotationMirror anno = atypeFactory.createUnknownAnnotation();
-		CFValue newResultValue = analysis.createSingleAnnotationValue(anno, result.getResultValue().getType().getUnderlyingType());
-		return new RegularTransferResult<>(newResultValue, result.getRegularStore());
-
+		return result;
 
 	}
 }
