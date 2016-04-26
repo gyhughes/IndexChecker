@@ -59,6 +59,7 @@ public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 		}
 
 		// if literal is at least zero assign it @NonNegative
+		// TODO: Is this using IndexFor.class correctly? Or should it be NonNegative.class? 
 		@Override
 		public Void visitLiteral(LiteralTree tree, AnnotatedTypeMirror type) {
 			if (!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements, IndexFor.class))) {
