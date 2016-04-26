@@ -13,7 +13,7 @@ public class testTrivial {
 		NN2NN(a);
 		NN2U(a);
 		U2U(a);
-		U2NN(b); // ERROR
+		U2NN(b);
 		
 		// Tests for Nullness checker, make sure checker framework plugin works(
 		nulla(null);
@@ -42,7 +42,7 @@ public class testTrivial {
 	// @NonNegative variable assigned an @Unknown value. Illegal.
 	public static void U2NN(@Unknown int x) {
 		@SuppressWarnings("unused")
-		@NonNegative int y = x;
+		@NonNegative int y = x; // warning here for improper assignment
 	}
 	
 	public static void nulla(Object m) { 
