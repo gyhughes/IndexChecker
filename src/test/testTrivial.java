@@ -4,7 +4,8 @@ import Trivial.qual.NonNegative;
 import Trivial.qual.Unknown;
 
 public class testTrivial {
-	public static void main(String[] args){
+	public static void main(String[] args) {
+		
 		@NonNegative int a = 1; 
 		@Unknown int b = -50;
 		
@@ -16,7 +17,6 @@ public class testTrivial {
 		
 		// Tests for Nullness checker, make sure checker framework plugin works(
 		nulla(null);
-		
 		
 		System.out.println("testNonNegative: Success");
 	}
@@ -45,7 +45,7 @@ public class testTrivial {
 		@NonNegative int y = x;
 	}
 	
-	public static void nulla(Object m){ 
+	public static void nulla(Object m) { 
 		m.getClass(); 
 	}
 }
