@@ -18,6 +18,8 @@ import org.checkerframework.framework.util.AnnotationBuilder;
 import Trivial.qual.NonNegative;
 import Trivial.qual.Unknown;
 
+
+// This 'generic version' will be used for the implementation of the dataflow analysis. 
 public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory{
 
 
