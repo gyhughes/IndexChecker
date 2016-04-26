@@ -23,6 +23,7 @@ import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.Tree;
 
 import Trivial.qual.NonNegative;
+import Trivial.qual.Unknown;
 
 // The current functionality of this class is to create @NonNegative instances if the annotation is manually used by the programmer, and to assign @NonNegative to strictly positive Literals (i.e. constants in expressions)
 
@@ -37,6 +38,11 @@ public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory<CFVa
 	//returns a new @NonNegative annotation
 	AnnotationMirror createNonNegAnnotation() {
 		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, NonNegative.class);
+		return builder.build();
+	}
+	//returns a new @Unknown annotation
+	AnnotationMirror createUnknownAnnotation(){
+		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, Unknown.class);
 		return builder.build();
 	}
 	
