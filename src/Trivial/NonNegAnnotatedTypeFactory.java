@@ -27,7 +27,11 @@ import Trivial.qual.NonNegative;
 import Trivial.qual.Unknown;
 import index.qual.IndexFor;
 
+// The current functionality of this class is to create @NonNegative instances if the annotation is manually used by the programmer, and to assign @NonNegative to strictly positive Literals (i.e. constants in expressions)
+
 public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
+	
+	//TODO: Comment on why/for what purpose postInit() is necessary
 	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker) {
 		super(checker);
 		this.postInit();
@@ -35,11 +39,9 @@ public class NonNegAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 	
 	//returns a new @NonNegative annotation
 	AnnotationMirror createNonNegAnnotation() {
-		AnnotationBuilder builder =
-				new AnnotationBuilder(processingEnv, NonNegative.class);
+		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, NonNegative.class);
 		return builder.build();
 	}
-	
 	
     @Override
     public TreeAnnotator createTreeAnnotator() {

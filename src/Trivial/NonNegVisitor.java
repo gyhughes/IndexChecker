@@ -16,6 +16,7 @@ public class NonNegVisitor extends BaseTypeVisitor<BaseAnnotatedTypeFactory> {
 		super(checker);
 	}
 
+	// Additionally to the visit method of super, this method checks whether the index at which the array is being accessed is annotated with @NonNegative.
 	@Override
 	public Void visitArrayAccess(ArrayAccessTree tree, Void type) {
 		ExpressionTree index = tree.getIndex();
