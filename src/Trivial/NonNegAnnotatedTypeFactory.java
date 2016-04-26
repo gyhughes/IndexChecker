@@ -1,16 +1,13 @@
 package Trivial;
 
-import java.lang.annotation.Annotation;
-import org.checkerframework.framework.flow.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.VariableElement;
 
-import org.checkerframework.common.basetype.BaseAnnotatedTypeFactory;
 import org.checkerframework.common.basetype.BaseTypeChecker;
+import org.checkerframework.framework.flow.CFStore;
+import org.checkerframework.framework.flow.CFValue;
 import org.checkerframework.framework.type.AnnotatedTypeFactory;
 import org.checkerframework.framework.type.AnnotatedTypeMirror;
 import org.checkerframework.framework.type.GenericAnnotatedTypeFactory;
@@ -20,18 +17,16 @@ import org.checkerframework.framework.type.treeannotator.PropagationTreeAnnotato
 import org.checkerframework.framework.type.treeannotator.TreeAnnotator;
 import org.checkerframework.framework.util.AnnotationBuilder;
 import org.checkerframework.javacutil.AnnotationUtils;
+import org.checkerframework.javacutil.Pair;
 
-import com.sun.source.tree.BinaryTree;
 import com.sun.source.tree.LiteralTree;
 import com.sun.source.tree.Tree;
 
 import Trivial.qual.NonNegative;
-import Trivial.qual.Unknown;
-import index.qual.IndexFor;
 
 // The current functionality of this class is to create @NonNegative instances if the annotation is manually used by the programmer, and to assign @NonNegative to strictly positive Literals (i.e. constants in expressions)
 
-public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory<CFValue, CFStore, CFTransfer, CFAnalysis>{
+public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory<CFValue, CFStore, NonNegTransfer, NonNegAnalysis>{
 	
 	//TODO: Comment on why/for what purpose postInit() is necessary
 	public NonNegAnnotatedTypeFactory(BaseTypeChecker checker) {
@@ -54,6 +49,11 @@ public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory<CFVa
         );
     }
 	
+    @Override
+    protected NonNegAnalysis createFlowAnalysis(List<Pair<VariableElement, CFValue>> fieldvalues){
+    	return new NonNegAnalysis(checker, this, fieldvalues);
+    }
+    
 	private class NonNegTreeAnnotator extends TreeAnnotator {
 
 		public NonNegTreeAnnotator(AnnotatedTypeFactory atypeFactory) {
