@@ -5,6 +5,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.io.File;
 
+// Based off of org.checkerframework.checker.tests.src.tests.RegexTest.java (github)
 public class NonNegTest extends CheckerFrameworkTest {
 
     public NonNegTest(File testFile) {
