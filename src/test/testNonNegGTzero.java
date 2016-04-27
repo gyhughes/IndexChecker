@@ -20,6 +20,12 @@ public class testNonNegGTzero {
 		} else {
 			int r = a[x]; // error
 		}
+		if(x > -10){
+			int c = a[x]; // error
+		} else{
+			int r = a[x]; // error
+		}
+		
 		
 	}
 
