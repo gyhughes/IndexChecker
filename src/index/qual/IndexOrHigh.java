@@ -6,8 +6,7 @@ import java.lang.annotation.Target;
 import org.checkerframework.framework.qual.SubtypeOf;
 
 @SubtypeOf({IndexTop.class, NonNegative.class})
-@Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE})
-
-public @interface IndexHigh {
+@Target({ElementType.TYPE_USE, ElementType.TYPE_PARAMETER})
+public @interface IndexOrHigh {
 	String value();
 }
