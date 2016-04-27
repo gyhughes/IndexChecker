@@ -47,49 +47,57 @@ public class NonNegTransfer extends CFAbstractTransfer<CFValue, CFStore, NonNegT
 	//checking >= @NonNegative transforms to @NonNegative
 	@Override
 	public TransferResult<CFValue, CFStore> visitGreaterThanOrEqual(GreaterThanOrEqualNode node, TransferInput<CFValue, CFStore> in){
-		Node right = node.getRightOperand();
 		NonNegAnnotatedTypeFactory atypeFactory = (NonNegAnnotatedTypeFactory) analysis.getTypeFactory();
 		TransferResult<CFValue, CFStore> result = super.visitGreaterThanOrEqual(node, in);
-		AnnotatedTypeMirror operand = atypeFactory.getAnnotatedType(right.getTree());	
-
-		CFStore thenStore = result.getRegularStore();
-		CFStore elseStore = thenStore.copy();
-
-		ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
-
+		// get the annotation from the right operand		
+		// we only refine if the left is a variable so see if it is by try/catch on the cast
 		try{
 			LocalVariableNode n =((LocalVariableNode) node.getLeftOperand());
-			Receiver r = new LocalVariable(n);
-			elseStore.insertValue(r , atypeFactory.createUnknownAnnotation());
+			
+			//initialize the then and else store for this node, then applies to true branch, else to false
+			CFStore thenStore = result.getRegularStore();
+			CFStore elseStore = thenStore.copy();
+			// initialize a transfer result for this node, using the super's results
+			ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
+			
+			// set the node that receives the new annotation
+			Receiver leftHand = new LocalVariable(n);
+			// set the else branch type to be @unknown (its not greater so don't refine)
+			elseStore.insertValue(leftHand , atypeFactory.createUnknownAnnotation());
+			// we only refine if the right side is @nonnegative so check that
+			Node right = node.getRightOperand();
+			AnnotatedTypeMirror operand = atypeFactory.getAnnotatedType(right.getTree());
 			if(operand.hasAnnotation(NonNegative.class)){
+				// create the @nonneg annotation and put it in the then branch
 				AnnotationMirror anno = atypeFactory.createNonNegAnnotation();
-				thenStore.insertValue(r, anno);
+				thenStore.insertValue(leftHand, anno);
 				return newResult;
 			}
 		}
 		catch(ClassCastException e){
 		}
+		// if we dont refine on the conditional just return what the super gave us
 		return result;
 	}
 	
 	// for checking > NonNegativ || > 1 transforms to @NonNegative
+	// same as >= but check for -1
 	@Override 
 	public TransferResult<CFValue, CFStore> visitGreaterThan(GreaterThanNode node, TransferInput<CFValue, CFStore> in){
-		Node right = node.getRightOperand();
 		NonNegAnnotatedTypeFactory atypeFactory = (NonNegAnnotatedTypeFactory) analysis.getTypeFactory();
 		TransferResult<CFValue, CFStore> result = super.visitGreaterThan(node, in);
-		AnnotatedTypeMirror operand = atypeFactory.getAnnotatedType(right.getTree());	
-
-		CFStore thenStore = result.getRegularStore();
-		CFStore elseStore = thenStore.copy();
-
-		ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
-
+		
 		try{
 			LocalVariableNode n =((LocalVariableNode) node.getLeftOperand());
+			CFStore thenStore = result.getRegularStore();
+			CFStore elseStore = thenStore.copy();
+			ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
 			Receiver r = new LocalVariable(n);
 			elseStore.insertValue(r , atypeFactory.createUnknownAnnotation());
 			boolean rightIsNeg1 = false;
+			Node right = node.getRightOperand();
+			AnnotatedTypeMirror operand = atypeFactory.getAnnotatedType(right.getTree());
+			// here is the check for -1, try cast to int and check
 			try{
 				ValueLiteralNode v = (ValueLiteralNode) right;
 				rightIsNeg1 = ((int)v.getValue() == -1);
