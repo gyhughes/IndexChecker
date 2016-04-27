@@ -8,14 +8,18 @@ import org.checkerframework.dataflow.analysis.FlowExpressions.Receiver;
 import org.checkerframework.dataflow.analysis.RegularTransferResult;
 import org.checkerframework.dataflow.analysis.TransferInput;
 import org.checkerframework.dataflow.analysis.TransferResult;
+import org.checkerframework.dataflow.cfg.node.GreaterThanNode;
 import org.checkerframework.dataflow.cfg.node.GreaterThanOrEqualNode;
 import org.checkerframework.dataflow.cfg.node.LocalVariableNode;
 import org.checkerframework.dataflow.cfg.node.Node;
 import org.checkerframework.dataflow.cfg.node.NumericalSubtractionNode;
+import org.checkerframework.dataflow.cfg.node.ValueLiteralNode;
 import org.checkerframework.framework.flow.CFAbstractTransfer;
 import org.checkerframework.framework.flow.CFStore;
 import org.checkerframework.framework.flow.CFValue;
 import org.checkerframework.framework.type.AnnotatedTypeMirror;
+
+import com.sun.source.tree.Tree;
 
 import Trivial.qual.NonNegative;
 
@@ -66,6 +70,39 @@ public class NonNegTransfer extends CFAbstractTransfer<CFValue, CFStore, NonNegT
 		catch(ClassCastException e){
 		}
 		return result;
+	}
+	
+	// for checking > NonNegativ || > 1 transforms to @NonNegative
+	@Override 
+	public TransferResult<CFValue, CFStore> visitGreaterThan(GreaterThanNode node, TransferInput<CFValue, CFStore> in){
+		Node right = node.getRightOperand();
+		NonNegAnnotatedTypeFactory atypeFactory = (NonNegAnnotatedTypeFactory) analysis.getTypeFactory();
+		TransferResult<CFValue, CFStore> result = super.visitGreaterThan(node, in);
+		AnnotatedTypeMirror operand = atypeFactory.getAnnotatedType(right.getTree());	
 
+		CFStore thenStore = result.getRegularStore();
+		CFStore elseStore = thenStore.copy();
+
+		ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
+
+		try{
+			LocalVariableNode n =((LocalVariableNode) node.getLeftOperand());
+			Receiver r = new LocalVariable(n);
+			elseStore.insertValue(r , atypeFactory.createUnknownAnnotation());
+			boolean rightIsNeg1 = false;
+			try{
+				ValueLiteralNode v = (ValueLiteralNode) right;
+				rightIsNeg1 = ((int)v.getValue() == -1);
+			}
+			catch(ClassCastException e){}
+			if(operand.hasAnnotation(NonNegative.class) || rightIsNeg1){				
+				AnnotationMirror anno = atypeFactory.createNonNegAnnotation();
+				thenStore.insertValue(r, anno);
+				return newResult;
+			}
+		}
+		catch(ClassCastException e){
+		}
+		return result;
 	}
 }
