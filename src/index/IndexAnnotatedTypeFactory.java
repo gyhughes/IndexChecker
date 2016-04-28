@@ -43,7 +43,7 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 	// returns new @IndexLow
 	AnnotationMirror createIndexLowAnnotation() {
 		AnnotationBuilder builder =
-				new AnnotationBuilder(processingEnv, IndexLow.class);
+				new AnnotationBuilder(processingEnv, IndexOrLow.class);
 		return builder.build();
 	}
 
