@@ -52,7 +52,8 @@ public class NonNegTransfer extends CFAbstractTransfer<CFValue, CFStore, NonNegT
 		// get the annotation from the right operand		
 		// we only refine if the left is a variable so see if it is by try/catch on the cast
 		try {
-			LocalVariableNode n =((LocalVariableNode) node.getLeftOperand());
+			// cast node to be able to get a receiver
+			LocalVariableNode left =((LocalVariableNode) node.getLeftOperand());
 			
 			//initialize the then and else store for this node, then applies to true branch, else to false
 			CFStore thenStore = result.getRegularStore();
@@ -60,9 +61,9 @@ public class NonNegTransfer extends CFAbstractTransfer<CFValue, CFStore, NonNegT
 			// initialize a transfer result for this node, using the super's results
 			ConditionalTransferResult<CFValue, CFStore> newResult = new ConditionalTransferResult<>(result.getResultValue(), thenStore, elseStore);
 			
-			// set the node that receives the new annotation
-			Receiver leftHand = new LocalVariable(n);
-			// set the else branch type to be @unknown (its not greater so don't refine)
+			// make a reciever for the left Operand so we can apply the type to it
+			Receiver leftHand = new LocalVariable(left);
+			// set the else branch type to be @unknown (its not >= so don't refine)
 			elseStore.insertValue(leftHand , atypeFactory.createUnknownAnnotation());
 			// we only refine if the right side is @NonNegative so check that
 			Node right = node.getRightOperand();
