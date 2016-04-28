@@ -21,7 +21,7 @@ public class NonNegAnalysis extends CFAbstractAnalysis<CFValue, CFStore, NonNegT
 	}
 	
 	@Override
-	public NonNegTransfer createTransferFunction(){
+	public NonNegTransfer createTransferFunction() {
 		return new NonNegTransfer(this);
 	}
 	

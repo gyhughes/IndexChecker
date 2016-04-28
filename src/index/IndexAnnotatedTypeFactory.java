@@ -36,14 +36,12 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 	
 	//returns a new @NonNegative annotation
 	AnnotationMirror createNonNegAnnotation() {
-		AnnotationBuilder builder =
-				new AnnotationBuilder(processingEnv, NonNegative.class);
+		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, NonNegative.class);
 		return builder.build();
 	}
 	// returns new @IndexLow
 	AnnotationMirror createIndexLowAnnotation() {
-		AnnotationBuilder builder =
-				new AnnotationBuilder(processingEnv, IndexOrLow.class);
+		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, IndexOrLow.class);
 		return builder.build();
 	}
 
@@ -51,6 +49,7 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 	public void annotateImplicit(Element element, AnnotatedTypeMirror type) {
 
 	}
+	
 	private class IndexTreeAnnotator extends TreeAnnotator {
 
 		public IndexTreeAnnotator(AnnotatedTypeFactory atypeFactory) {
@@ -74,7 +73,7 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 		}
 		// adding top to nonnegative make it top
 		@Override
-		public Void visitBinary(BinaryTree tree, AnnotatedTypeMirror type){
+		public Void visitBinary(BinaryTree tree, AnnotatedTypeMirror type) {
 			return super.visitBinary(tree, type);
 		}
 	}
