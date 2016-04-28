@@ -71,7 +71,7 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 			}
 			return super.visitLiteral(tree, type);
 		}
-		// adding top to nonnegative make it top
+		// adding top to @NonNegative make it top
 		@Override
 		public Void visitBinary(BinaryTree tree, AnnotatedTypeMirror type) {
 			return super.visitBinary(tree, type);

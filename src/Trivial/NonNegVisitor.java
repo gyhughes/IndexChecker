@@ -12,6 +12,7 @@ import com.sun.source.tree.ExpressionTree;
 
 
 public class NonNegVisitor extends BaseTypeVisitor<NonNegAnnotatedTypeFactory> {
+	
 	public NonNegVisitor(BaseTypeChecker checker) {
 		super(checker);
 	}
