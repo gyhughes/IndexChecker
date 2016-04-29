@@ -1,30 +1,42 @@
 package index;
 
-import javax.lang.model.element.AnnotationMirror;
-import javax.lang.model.element.Element;
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Set;
 
-import org.checkerframework.common.basetype.BaseAnnotatedTypeFactory;
+import javax.lang.model.element.AnnotationMirror;
+import javax.lang.model.element.VariableElement;
+
 import org.checkerframework.common.basetype.BaseTypeChecker;
+import org.checkerframework.framework.flow.CFStore;
+import org.checkerframework.framework.flow.CFValue;
 import org.checkerframework.framework.type.AnnotatedTypeFactory;
-import org.checkerframework.framework.type.AnnotatedTypeMirror;
+import org.checkerframework.framework.type.GenericAnnotatedTypeFactory;
+import org.checkerframework.framework.type.QualifierHierarchy;
 import org.checkerframework.framework.type.treeannotator.ImplicitsTreeAnnotator;
 import org.checkerframework.framework.type.treeannotator.ListTreeAnnotator;
 import org.checkerframework.framework.type.treeannotator.PropagationTreeAnnotator;
 import org.checkerframework.framework.type.treeannotator.TreeAnnotator;
-import org.checkerframework.framework.util.AnnotationBuilder;
+import org.checkerframework.framework.util.GraphQualifierHierarchy;
+import org.checkerframework.framework.util.MultiGraphQualifierHierarchy.MultiGraphFactory;
 import org.checkerframework.javacutil.AnnotationUtils;
-import com.sun.source.tree.BinaryTree;
-import com.sun.source.tree.LiteralTree;
-import com.sun.source.tree.Tree;
-
+import org.checkerframework.javacutil.Pair;
 import index.qual.*;
 
-public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
+public class IndexAnnotatedTypeFactory
+extends GenericAnnotatedTypeFactory<CFValue, CFStore, IndexTransfer, IndexAnalysis> {
 
-	public IndexAnnotatedTypeFactory(BaseTypeChecker checker, boolean useFlow) {
-		super(checker, useFlow);
+	protected final AnnotationMirror IndexFor;
+	protected final AnnotationMirror IndexBottom;
+
+
+	public IndexAnnotatedTypeFactory(BaseTypeChecker checker) {
+		super(checker);
+		IndexFor = AnnotationUtils.fromClass(elements, IndexFor.class);
+		IndexBottom = AnnotationUtils.fromClass(elements, IndexBottom.class);
+		this.postInit();
 	}
-	
+
 	@Override
 	public TreeAnnotator createTreeAnnotator() {
 		return new ListTreeAnnotator(
@@ -33,48 +45,44 @@ public class IndexAnnotatedTypeFactory extends BaseAnnotatedTypeFactory{
 				new PropagationTreeAnnotator(this)
 				);
 	}
-	
-	//returns a new @NonNegative annotation
-	AnnotationMirror createNonNegAnnotation() {
-		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, NonNegative.class);
-		return builder.build();
-	}
-	// returns new @IndexLow
-	AnnotationMirror createIndexLowAnnotation() {
-		AnnotationBuilder builder = new AnnotationBuilder(processingEnv, IndexOrLow.class);
-		return builder.build();
-	}
 
 	@Override
-	public void annotateImplicit(Element element, AnnotatedTypeMirror type) {
-
+	protected IndexAnalysis createFlowAnalysis(List<Pair<VariableElement, CFValue>> fieldvalues){
+		return new IndexAnalysis(checker, this, fieldvalues);
 	}
-	
-	private class IndexTreeAnnotator extends TreeAnnotator {
 
+	private class IndexTreeAnnotator extends TreeAnnotator {
 		public IndexTreeAnnotator(AnnotatedTypeFactory atypeFactory) {
 			super(atypeFactory);
 		}
-		
-		// if literal is at least zero assign it @NonNegative
-		@Override
-		public Void visitLiteral(LiteralTree tree, AnnotatedTypeMirror type){
-			if (!type.isAnnotatedInHierarchy(AnnotationUtils.fromClass(elements, IndexFor.class))) {
-				if (tree.getKind() == Tree.Kind.INT_LITERAL) {
-					if ((int)tree.getValue() > -1) {
-						type.addAnnotation(createNonNegAnnotation());
-					}
-					if ((int)tree.getValue() == -1) {
-						type.addAnnotation(createIndexLowAnnotation());
-					}
-				}
-			}
-			return super.visitLiteral(tree, type);
+	}
+    @Override
+    protected Set<Class<? extends Annotation>> createSupportedTypeQualifiers() {
+        return getBundledTypeQualifiersWithPolyAll(IndexFor.class);
+    }
+
+	@Override
+	public QualifierHierarchy createQualifierHierarchy(MultiGraphFactory factory) {
+		return new IndexQualifierHierarchy(factory, IndexBottom);
+	}
+	private final class IndexQualifierHierarchy extends GraphQualifierHierarchy {
+
+		public IndexQualifierHierarchy(MultiGraphFactory f,
+				AnnotationMirror bottom) {
+			super(f, bottom);
 		}
-		// adding top to @NonNegative make it top
+
 		@Override
-		public Void visitBinary(BinaryTree tree, AnnotatedTypeMirror type) {
-			return super.visitBinary(tree, type);
+		public boolean isSubtype(AnnotationMirror rhs, AnnotationMirror lhs) {
+			// Ignore annotation values to ensure that annotation is in supertype map.
+			if (AnnotationUtils.areSameIgnoringValues(lhs, IndexFor)) {
+				lhs = IndexFor;
+			}
+			if (AnnotationUtils.areSameIgnoringValues(rhs, IndexFor)) {
+				rhs = IndexFor;
+			}
+			return super.isSubtype(rhs, lhs);
 		}
 	}
+
 }

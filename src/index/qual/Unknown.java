@@ -8,6 +8,6 @@ import org.checkerframework.framework.qual.SubtypeOf;
 @SubtypeOf({})
 @Target({ElementType.TYPE_USE, ElementType.TYPE_PARAMETER})
 @DefaultQualifierInHierarchy
-public @interface IndexTop {
+public @interface Unknown {
 
 }
