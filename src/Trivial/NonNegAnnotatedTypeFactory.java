@@ -56,7 +56,7 @@ public class NonNegAnnotatedTypeFactory extends GenericAnnotatedTypeFactory<CFVa
     }
 	
     @Override
-    protected NonNegAnalysis createFlowAnalysis(List<Pair<VariableElement, CFValue>> fieldvalues){
+    protected NonNegAnalysis createFlowAnalysis(List<Pair<VariableElement, CFValue>> fieldvalues) {
     	return new NonNegAnalysis(checker, this, fieldvalues);
     }
     
