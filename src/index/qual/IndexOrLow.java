@@ -4,7 +4,7 @@ import java.lang.annotation.Target;
 
 import org.checkerframework.framework.qual.SubtypeOf;
 
-@SubtypeOf({IndexTop.class, LTLength.class})
+@SubtypeOf({Unknown.class, LTLength.class})
 @Target({ElementType.TYPE_USE, ElementType.TYPE_PARAMETER})
 public @interface IndexOrLow {
 
